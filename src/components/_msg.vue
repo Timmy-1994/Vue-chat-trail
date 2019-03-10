@@ -1,37 +1,29 @@
 <template lang='pug'>
   .msg-wrapper
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.other
-      .avatar
-      .msg otherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherotherother
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.our
-      //.avatar
-      .msg our
-    .msg-box.other
-      .avatar
-      .msg other 
-</template>
+    .msg-box.our(
+      v-for='msg,index in messages'
+      :key='index'
+      v-if='msg.user==self'
+    )
+      .msg(:style="ourbgc") {{ msg.message }}
+      
+    .msg-box.other(
+      v-for='msg,index in messages'
+      :key='index'
+      v-if='msg.user!=self'
+    )
+      .msg(:style="otherbgc") {{ msg.message }}
+    
+    //- // SRC TEMPLATE
 
+    //- .msg-box.our(:style="ourbgc")
+    //-   .msg=text of our
+
+    //- .msg-box.other(:style="otherbgc")
+    //-   .avatar(:style={backgroundImage:'url('+avatar+')'})
+    //-   .msg=text of other,text of other,text of other,text of other,text of other,text of other,text of other,text of other,text of other,text of other,
+
+</template>
 <script>
 
 export default {
@@ -40,15 +32,23 @@ export default {
     return {}
   },
   props: {
-    othersidebgc: {
-      type: String,
+    otherbgc: {
+      type: Object,
     },
-    oursidebgc: {
-      type: String,
+    ourbgc: {
+      type: Object,
     },
     avatar:{
       type: String,
       default: 'no url in props'
+    },
+    messages:{
+      type: Array,
+      require: true
+    },
+    self:{
+      type: String,
+      require: true
     }
   }
 }
@@ -102,7 +102,8 @@ $ourbgc: #fff4cf;
       .msg{
         background-color: $otherbgc;
         &:after{
-          border-right-color: $otherbgc;
+          // border-right-color: $otherbgc;
+          border-right-color: inherit;
           left: -10px;
         }
       }
@@ -113,7 +114,8 @@ $ourbgc: #fff4cf;
       .msg{
         background-color: $ourbgc;
         &:after{
-          border-left-color: $ourbgc;
+          // border-left-color: $ourbgc;
+          border-left-color: inherit;
           right: -10px;
         }
       }
