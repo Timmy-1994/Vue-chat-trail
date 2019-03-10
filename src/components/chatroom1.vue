@@ -1,15 +1,22 @@
 <template lang='pug'>
   .wrapper
     .chat-box
-      b.date 06/16
-      msg()
-      inter()
+      b.date 00/00
+      msg(
+        :messages= 'messages'
+        :self= 'user'
+        :avatar= 'msgStyle.avatar'
+      )
+      inter(
+        @sendmsg= 'sendmsg'
+      )
 </template>
 
 <script>
 
 import msg from './_msg'
 import inter from './_inter'
+import io from 'socket.io-client'
 
 export default {
   components:{
@@ -19,9 +26,32 @@ export default {
   name: 'chatroom1',
   data () {
     return {
-      msgs:{},
-      inters:{}
+      user: 'chatroom-user-1',
+      messages: [], // obj in array
+      socket : io('localhost:3001'),
+      msgStyle:{
+        avatar: {backgroundImage: "url('./static/logo.png')"}
+      },
+      interStyle:{}
     }
+  },
+  methods:{
+    sendmsg:function(msg){
+      this.socket.emit('SEND_MESSAGE', {
+          user: this.user,
+          message: msg
+      });
+    }
+  },
+  mounted() {
+    /**
+     *  data : object
+     *  this.message : array
+    */
+    this.socket.on('MESSAGE', (data) => {      
+      this.messages.push(data);
+      // or this.messages = [...this.messages, data];
+    });
   }
 }
 

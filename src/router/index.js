@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import chatroom1 from '@/components/chatroom1'
+
 import chatroom1 from '@/components/chatroom1'
 import chatroom2 from '@/components/chatroom2'
 

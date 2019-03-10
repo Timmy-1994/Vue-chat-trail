@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "server": "node server/app.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
@@ -19,6 +20,7 @@
     "pug-loader": "^2.4.0",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
+    "socket.io-client": "^2.2.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-textarea-autosize": "^1.0.4"

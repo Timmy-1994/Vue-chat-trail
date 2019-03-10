@@ -1,9 +1,9 @@
 <template lang='pug'>
   #app
-    //img(src="./assets/logo.png")
+    //- img(src="./assets/logo.png")
     header
-      a(href="#/chatroom1") 聊天室1
-      a(href="#/chatroom2") 聊天室2
+      a(target="_blank" href="#/chatroom1") ChatRoom : style-1 user-1
+      a(target="_blank" href="#/chatroom2") ChatRoom : style-2 user-2
     router-view
 </template>
 

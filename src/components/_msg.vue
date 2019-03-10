@@ -1,18 +1,13 @@
 <template lang='pug'>
   .msg-wrapper
-    .msg-box.our(
+    .msg-box(
       v-for='msg,index in messages'
       :key='index'
-      v-if='msg.user==self'
+      :style="msg.user==self?{justifyContent:'flex-end'}:{justifyContent:'flex-start'}"
     )
-      .msg(:style="ourbgc") {{ msg.message }}
-      
-    .msg-box.other(
-      v-for='msg,index in messages'
-      :key='index'
-      v-if='msg.user!=self'
-    )
-      .msg(:style="otherbgc") {{ msg.message }}
+      .msg.our(v-if='msg.user==self' :style="ourbgc") {{ msg.message }}
+      .avatar(v-if='msg.user!=self' :style="avatar")
+      .msg.other(v-if='msg.user!=self' :style="otherbgc") {{ msg.message }}
     
     //- // SRC TEMPLATE
 
@@ -39,8 +34,7 @@ export default {
       type: Object,
     },
     avatar:{
-      type: String,
-      default: 'no url in props'
+      type: Object,
     },
     messages:{
       type: Array,
@@ -68,18 +62,17 @@ $ourbgc: #fff4cf;
     
   .msg-box{
     display: flex;
-    align-items: center;
     padding: 1em 0.5em;
-    flex-wrap: nowrap;
     .avatar{
       margin: 0 0.5em;
       border-radius: 100%;
       width: 45px;
       height: 45px;
-      //background-image:
-      background-position: center;
-      background-size: cover;
-      background-color: #000;
+      //background-image: // inline style by props
+      background-position: center center;
+      background-size: 80%;
+      background-repeat: no-repeat;
+      background-color: #fff;
     }
 
     .msg{
@@ -89,36 +82,33 @@ $ourbgc: #fff4cf;
       word-wrap:break-word;
       padding: 0.5em;
       box-sizing: border-box;
-      position: relative;// for :after 's abs
+      position: relative;// for :after 's absolute
+
       &:after{
         content: '';
         position: absolute;
         border: 5px solid transparent;
         top: 35%;
       }
-    }
 
-    &.other {
-      .msg{
+      &.other{
         background-color: $otherbgc;
+        border-color: $otherbgc;// could be override by inline style(by pass in props)
         &:after{
-          // border-right-color: $otherbgc;
-          border-right-color: inherit;
+          border-right-color: inherit;// just inherit form parent "pseudo dom" couldn't style by inline
           left: -10px;
         }
       }
-    }
 
-    &.our {
-      flex-direction: row-reverse;
-      .msg{
+      &.our{
         background-color: $ourbgc;
+        border-color: $otherbgc;// could be override by inline style(by pass in props)
         &:after{
-          // border-left-color: $ourbgc;
-          border-left-color: inherit;
+          border-left-color: inherit;// just inherit form parent "pseudo dom" couldn't style by inline
           right: -10px;
         }
       }
+
     }
   }
 }

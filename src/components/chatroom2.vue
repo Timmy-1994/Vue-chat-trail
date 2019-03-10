@@ -1,13 +1,20 @@
 <template lang='pug'>
   .wrapper
     .chat-box
-      b.date 06/16
-      msg()
+      b.date 00/00
+      msg(
+        :otherbgc= 'msgStyle.otherbgc'
+        :ourbgc= 'msgStyle.ourbgc'
+        :avatar= 'msgStyle.avatar'
+        :messages= 'messages'
+        :self= 'user'
+      )
       inter(
-        :leftic= 'inters.leftic'
-        :submitic= 'inters.submitic'
-        :submitibgc= 'inters.submitibgc'
-        :textareabg= 'inters.textareabg'
+        :leftic= 'interStyle.leftic'
+        :submitic= 'interStyle.submitic'
+        :submitibgc= 'interStyle.submitibgc'
+        :textareabg= 'interStyle.textareabg'
+        @sendmsg= 'sendmsg'
       )
 </template>
 
@@ -15,6 +22,7 @@
 
 import msg from './_msg'
 import inter from './_inter'
+import io from 'socket.io-client'
 
 export default {
   components:{
@@ -24,24 +32,41 @@ export default {
   name: 'chatroom2',
   data () {
     return {
-      msgs:{
-
+      user: 'chatroom-user-2',
+      messages: [], // obj in array
+      socket : io('localhost:3001'),
+      msgStyle:{
+        otherbgc: {backgroundColor:'#4a3d13',borderColor:'#4a3d13'},
+        ourbgc: {backgroundColor:'#2d5b1a',borderColor:'#2d5b1a'},
+        avatar: {backgroundImage: "url('./static/logo.png')"}
       },
-      inters:{
+      interStyle:{
         leftic:{color:'#f9be00'},
         submitic:{color:'#4a3d13'},
         submitibgc:{backgroundColor:'#f9be00'},
         textareabg:{backgroundColor:'rgba(256,256,256,0.6)'}
       }
     }
+  },
+  methods:{
+    sendmsg:function(msg){
+      this.socket.emit('SEND_MESSAGE', {
+          user: this.user,
+          message: msg
+      });
+    }
+  },
+  mounted() {
+    /**
+     *  data : object
+     *  this.message : array
+    */
+    this.socket.on('MESSAGE', (data) => {      
+      this.messages.push(data);
+      // or this.messages = [...this.messages, data];
+    });
   }
 }
-
-/** color sets of msg
- * $yellow: #f9be00;
- * $otherbgc: #4a3d13;
- * $ourbgc: #2d5b1a;
- */
 
 </script>
 
