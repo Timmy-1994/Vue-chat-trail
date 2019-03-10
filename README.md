@@ -8,7 +8,7 @@
 # install dependencies
 npm install
 
-# run websocket (backend) server
+# run websocket (backend) server at 3001
 npm run server
 
 # run (client) server with hot reload at localhost:8080
