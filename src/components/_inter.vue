@@ -1,18 +1,22 @@
 <template lang='pug'>
-  .inter-box()
+  form.inter-box(@submit.prevent="sendmsg")
     a(href="#")
       font-awesome-icon(icon="paperclip" :style='leftic' )
     a(href="#")
       font-awesome-icon(icon="smile" :style='leftic' )
     .text-box()
       textarea-autosize(
-          placeholder="Type something here..."
-          ref="someName"
-          :min-height=40
-          :max-height=200
-          :style='textareabg'
-        )
-      button(:style='submitibgc')
+        placeholder="Type something here..."
+        ref="someName"
+        :min-height=40
+        :max-height=150
+        :style='textareabg'
+        v-model='msg'
+      )
+      button(
+        type='submit'
+        :style='submitibgc'
+      )
         font-awesome-icon(icon="paper-plane" :style='submitic')
 </template>
 
@@ -21,7 +25,9 @@
 export default {
   name: 'interBox',
   data () {
-    return {}
+    return {
+      msg:'',
+    }
   },
   props:{
     leftic:{
@@ -35,7 +41,13 @@ export default {
     },
     textareabg:{
       type: Object
-    },
+    }
+  },
+  methods:{
+    sendmsg: function(){
+      this.$emit('sendmsg',this.msg)
+      this.msg = ''
+    }
   }
 }
 </script>
@@ -60,17 +72,15 @@ $main: #00aff0;
   .text-box{
     width: 70%;
     display: flex;
-    height: 100%;
     textarea{
       border-top-left-radius: 3px;
       border-bottom-left-radius: 3px;
-      padding: 0.5em;
+      padding: 0 0.5em; // top and bottom padding will cause "textarea component" gets wrong height value which uses "contentHeight"
       width:100%;
       box-sizing: border-box;   
       border: none;
       outline: none;
       overflow-y: scroll !important;
-      max-height: 100%;
     }
     button{
       background-color: $main;
