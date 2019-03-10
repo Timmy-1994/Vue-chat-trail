@@ -2,8 +2,9 @@
   #app
     //- img(src="./assets/logo.png")
     header
-      a(target="_blank" href="#/chatroom1") ChatRoom : style-1 user-1
-      a(target="_blank" href="#/chatroom2") ChatRoom : style-2 user-2
+      a(target="_blank" href="#/chatroom1") ChatRoom-1 
+      a(target="_blank" href="#/chatroom2") ChatRoom-2 
+      hr
     router-view
 </template>
 
@@ -38,6 +39,8 @@ export default {
     margin: 50px 0;
     a{
       padding: 15px;
+      font-weight: bold;
+      text-decoration: none;
     }
   }
 }

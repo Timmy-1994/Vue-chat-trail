@@ -8,15 +8,6 @@
       .msg.our(v-if='msg.user==self' :style="ourbgc") {{ msg.message }}
       .avatar(v-if='msg.user!=self' :style="avatar")
       .msg.other(v-if='msg.user!=self' :style="otherbgc") {{ msg.message }}
-    
-    //- // SRC TEMPLATE
-
-    //- .msg-box.our(:style="ourbgc")
-    //-   .msg=text of our
-
-    //- .msg-box.other(:style="otherbgc")
-    //-   .avatar(:style={backgroundImage:'url('+avatar+')'})
-    //-   .msg=text of other,text of other,text of other,text of other,text of other,text of other,text of other,text of other,text of other,text of other,
 
 </template>
 <script>
