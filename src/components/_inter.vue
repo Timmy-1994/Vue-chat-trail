@@ -12,6 +12,7 @@
         :max-height=150
         :style='textareabg'
         v-model='msg'
+        @keyup.enter.native= 'sendmsg'
       )
       button(
         type='submit'
@@ -44,7 +45,22 @@ export default {
     }
   },
   methods:{
-    sendmsg: function(){
+    sendmsg: function(e){
+      /**
+       * e.shiftKey : Boolean
+       * console.log(/\S/.test(this.msg)) : false is empty
+       */
+      var NotEmpty = /\S/.test(this.msg)
+      
+      if(e.code=="NumpadEnter" && !NotEmpty ){
+        this.msg =''
+        return
+      }
+
+      if(e.shiftKey || !NotEmpty ){
+        return
+      }
+
       this.$emit('sendmsg',this.msg)
       this.msg = ''
     }
@@ -57,13 +73,13 @@ export default {
 $main: #00aff0;
 
 // footer input
-.inter-box{
+form.inter-box{
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: rgba(0,0,0,0.5);
   padding: 1em 0;
-
+  flex-shrink: 0;
   svg{
     font-size: 20px;
     color: $main;

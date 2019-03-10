@@ -35,6 +35,10 @@ export default {
       type: String,
       require: true
     }
+  },
+  updated:function(){      
+      var dom = document.querySelector(".msg-wrapper")
+      dom.scrollTop = dom.scrollHeight
   }
 }
 
@@ -54,6 +58,7 @@ $ourbgc: #fff4cf;
   .msg-box{
     display: flex;
     padding: 1em 0.5em;
+    white-space: pre;
     .avatar{
       margin: 0 0.5em;
       border-radius: 100%;
